@@ -11,24 +11,11 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+**What my version does.** It is a small content-based music recommender called VibeFinder 1.0. It reads 20 songs from a CSV file and scores each one against a user's taste profile (genre, mood, energy, valence and acousticness). It then returns the top 5 songs with a short, point-by-point explanation of each score. I tested it with 12 profiles, including adversarial ones, and ran a weight experiment. Findings are in the [Model Card](model_card.md).
 
 ---
 
 ## How The System Works
-
-Explain your design in plain language.
-
-
-Some prompts to answer: 
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
 
 There are many ways that AI recommendation systems work at YouTube, TikTok, and Spotify, and although they may not use the same recommendation system, the properties and attributes that make up their systems often have a lot of overlap. At a high-level, recommendation systems often have content-based filtering, that is, matching content attributes like mood, genre, energy to user taste profile. Another way these algorithms recommend content is collaborative-filtering, that is, using engagement behavior between user profiles to recommend content. 
 
@@ -63,6 +50,7 @@ Energy and valence are given the highest weights because their attributes are in
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+   ```
 
 2. Install dependencies
 
@@ -78,13 +66,12 @@ python -m src.main
 
 ### Running Tests
 
-Run the starter tests with:
+Run the tests with:
 
 ```bash
 pytest
 ```
 
-You can add more tests in `tests/test_recommender.py`.
 
 ---
 
@@ -836,7 +823,6 @@ Profile: genre='classical'
 ========================================================================
 ```
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---
 
@@ -870,7 +856,7 @@ See the model card for more.
 
 ## Reflection
 
-Read and complete `model_card.md`:
+For the full write-up, see the model card:
 
 [**Model Card**](model_card.md)
 
