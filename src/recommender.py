@@ -2,14 +2,34 @@ from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 import csv
 
-# Weights from the README recipe. They sum to 1.0, so the final score is 0 to 1.
-WEIGHTS = {
+import os
+
+# Baseline weights from the README recipe. They sum to 1.0, so the final score is 0 to 1.
+BASELINE_WEIGHTS = {
     "energy": 0.30,
     "valence": 0.30,
     "genre": 0.15,
     "mood": 0.15,
     "acousticness": 0.10,
 }
+
+# Experiment: double energy, halve genre. Those raw numbers add up to 1.225, so
+# every weight is divided by the total to bring the sum back to exactly 1.0.
+# That keeps the score between 0 and 1.
+_RAW_EXPERIMENT = {
+    "energy": BASELINE_WEIGHTS["energy"] * 2,
+    "valence": BASELINE_WEIGHTS["valence"],
+    "genre": BASELINE_WEIGHTS["genre"] / 2,
+    "mood": BASELINE_WEIGHTS["mood"],
+    "acousticness": BASELINE_WEIGHTS["acousticness"],
+}
+EXPERIMENT_WEIGHTS = {k: v / sum(_RAW_EXPERIMENT.values()) for k, v in _RAW_EXPERIMENT.items()}
+
+for _w in (BASELINE_WEIGHTS, EXPERIMENT_WEIGHTS):
+    assert abs(sum(_w.values()) - 1.0) < 1e-9, "weights must sum to 1.0"
+
+# Run with RECOMMENDER_WEIGHTS=experiment to try the experiment; default is baseline.
+WEIGHTS = EXPERIMENT_WEIGHTS if os.environ.get("RECOMMENDER_WEIGHTS") == "experiment" else BASELINE_WEIGHTS
 
 
 @dataclass
