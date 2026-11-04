@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
+import csv
 
 @dataclass
 class Song:
@@ -28,8 +29,8 @@ class UserProfile:
     favorite_mood: str
     target_energy: float
     # likes_acoustic: bool now becomes a float value for more precise preferences
-    acoustic_preference: float
-
+    target_acousticness: float
+    target_valence: float
 
 class Recommender:
     """
@@ -52,9 +53,28 @@ def load_songs(csv_path: str) -> List[Dict]:
     Loads songs from a CSV file.
     Required by src/main.py
     """
-    # TODO: Implement CSV loading logic
+    songs = []
+    #"With the specific document named 'data.csv' opened in a mode meant for reading text, 
+    # while explicitly using a standard text translation system to ensure special characters don't get scrambled,
+    # and keeping formatting clean, let's temporarily nickname this open document 'file'."
+    with open(csv_path, mode="r", encoding="utf-8", newline="") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            songs.append({
+                "id": int(row["id"]),
+                "title": row["title"],
+                "artist": row["artist"],
+                "genre": row["genre"],
+                "mood": row["mood"],
+                "energy": float(row["energy"]),
+                "tempo_bpm": float(row["tempo_bpm"]),
+                "valence": float(row["valence"]),
+                "danceability": float(row["danceability"]),
+                "acousticness": float(row["acousticness"]),
+            })
     print(f"Loading songs from {csv_path}...")
-    return []
+    print(f"Loaded songs: {len(songs)}")
+    return songs
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     """
