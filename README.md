@@ -101,6 +101,61 @@ Paste a sample of your recommender's output here as a text block so a reader can
 #   3. ...
 ```
 
+========================================================================
+Profile: genre=pop, mood=happy, energy=0.8, valence=0.9, acousticness=0.6
+
+------------------------------------------------------------------------
+#1  Sunrise City  by Neon Echo
+    Score: 0.93 / 1.00   [################### ]
+    Why:
+      - energy closeness 0.98 (song 0.82 vs target 0.80) (+0.29)
+      - valence closeness 0.94 (song 0.84 vs target 0.90) (+0.28)
+      - acousticness closeness 0.58 (song 0.18 vs target 0.60) (+0.06)
+      - genre match: pop (+0.15)
+      - mood match: happy (+0.15)
+
+------------------------------------------------------------------------
+#2  Rooftop Lights  by Indigo Parade
+    Score: 0.79 / 1.00   [################    ]
+    Why:
+      - energy closeness 0.96 (song 0.76 vs target 0.80) (+0.29)
+      - valence closeness 0.91 (song 0.81 vs target 0.90) (+0.27)
+      - acousticness closeness 0.75 (song 0.35 vs target 0.60) (+0.08)
+      - genre mismatch: indie pop vs pop (+0.00)
+      - mood match: happy (+0.15)
+
+------------------------------------------------------------------------
+#3  Island Breeze  by Jah Sunrise
+    Score: 0.75 / 1.00   [###############     ]
+    Why:
+      - energy closeness 0.78 (song 0.58 vs target 0.80) (+0.23)
+      - valence closeness 0.96 (song 0.86 vs target 0.90) (+0.29)
+      - acousticness closeness 0.80 (song 0.40 vs target 0.60) (+0.08)
+      - genre mismatch: reggae vs pop (+0.00)
+      - mood match: happy (+0.15)
+
+------------------------------------------------------------------------
+#4  Pulse Horizon  by Helix Drop
+    Score: 0.75 / 1.00   [###############     ]
+    Why:
+      - energy closeness 0.85 (song 0.95 vs target 0.80) (+0.26)
+      - valence closeness 1.00 (song 0.90 vs target 0.90) (+0.30)
+      - acousticness closeness 0.43 (song 0.03 vs target 0.60) (+0.04)
+      - genre match: pop (+0.15)
+      - mood mismatch: euphoric vs happy (+0.00)
+
+------------------------------------------------------------------------
+#5  Gym Hero  by Max Pulse
+    Score: 0.72 / 1.00   [##############      ]
+    Why:
+      - energy closeness 0.87 (song 0.93 vs target 0.80) (+0.26)
+      - valence closeness 0.87 (song 0.77 vs target 0.90) (+0.26)
+      - acousticness closeness 0.45 (song 0.05 vs target 0.60) (+0.05)
+      - genre match: pop (+0.15)
+      - mood mismatch: intense vs happy (+0.00)
+
+========================================================================
+
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---

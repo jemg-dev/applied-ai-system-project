@@ -2,6 +2,16 @@ from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 import csv
 
+# Weights from the README recipe. They sum to 1.0, so the final score is 0 to 1.
+WEIGHTS = {
+    "energy": 0.30,
+    "valence": 0.30,
+    "genre": 0.15,
+    "mood": 0.15,
+    "acousticness": 0.10,
+}
+
+
 @dataclass
 class Song:
     """
@@ -49,10 +59,7 @@ class Recommender:
         return "Explanation placeholder"
 
 def load_songs(csv_path: str) -> List[Dict]:
-    """
-    Loads songs from a CSV file.
-    Required by src/main.py
-    """
+    """Load songs from a CSV file into a list of dicts with numeric fields converted."""
     songs = []
     #"With the specific document named 'data.csv' opened in a mode meant for reading text, 
     # while explicitly using a standard text translation system to ensure special characters don't get scrambled,
@@ -77,19 +84,37 @@ def load_songs(csv_path: str) -> List[Dict]:
     return songs
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
-    """
-    Scores a single song against user preferences.
-    Required by recommend_songs() and src/main.py
-    """
-    # TODO: Implement scoring logic using your Algorithm Recipe from Phase 2.
-    # Expected return format: (score, reasons)
-    return []
+    """Score one song against the user's preferences, returning (score 0.0-1.0, list of reasons)."""
+    score = 0.0
+    reasons: List[str] = []
+
+    # Numeric attributes: closeness = 1 - |song - target|
+    for attr in ("energy", "valence", "acousticness"):
+        if attr in user_prefs:
+            closeness = 1 - abs(song[attr] - user_prefs[attr])
+            detail = f"song {song[attr]:.2f} vs target {user_prefs[attr]:.2f}"
+        else:
+            closeness = 1
+            detail = "no preference, anything works"
+        points = WEIGHTS[attr] * closeness
+        score += points
+        reasons.append(f"{attr} closeness {closeness:.2f} ({detail}) (+{points:.2f})")
+
+    # Categorical attributes: exact match = full weight, otherwise 0
+    for attr in ("genre", "mood"):
+        if attr not in user_prefs:
+            points, detail = WEIGHTS[attr], "no preference, anything works"
+        elif song[attr] == user_prefs[attr]:
+            points, detail = WEIGHTS[attr], f"match: {song[attr]}"
+        else:
+            points, detail = 0.0, f"mismatch: {song[attr]} vs {user_prefs[attr]}"
+        score += points
+        reasons.append(f"{attr} {detail} (+{points:.2f})")
+
+    return round(score, 4), reasons
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
-    """
-    Functional implementation of the recommendation logic.
-    Required by src/main.py
-    """
-    # TODO: Implement scoring and ranking logic
-    # Expected return format: (song_dict, score, explanation)
-    return []
+    """Return the top k songs as (song, score, explanation) tuples, highest score first."""
+    scored = [(song, *score_song(user_prefs, song)) for song in songs]
+    scored.sort(key=lambda item: item[1], reverse=True)
+    return [(song, score, "; ".join(reasons)) for song, score, reasons in scored[:k]]
