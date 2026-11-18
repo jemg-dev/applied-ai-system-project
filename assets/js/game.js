@@ -119,6 +119,8 @@ function tick() {
   legL.rotation.x = sw; legR.rotation.x = -sw;
   armL.rotation.x = -sw; armR.rotation.x = sw;
 
+  updateButler(dt, t);
+
   // Which room are we in? Switch audio + visualizer when it changes.
   const room = roomAt(P.x, P.z);
   if (room !== currentRoom) {

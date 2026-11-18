@@ -65,6 +65,26 @@ Notes:
 - The scoring in `assets/js/recommender.js` is a JavaScript port of `score_song` in `src/recommender.py`. If you change the weights there, change them in the game too.
 - Debug options: `index.html?autostart&room=3` skips the title screen and teleports into room 3; add `&mute` to skip audio (the visualizer then runs on a fake signal).
 
+### The Curator (RAG butler)
+
+A butler stands in the hallway and a chat panel sits at the bottom left. Type what you want ("something calm to study to") or ask a question ("why is this only a 62% match?"). Each message goes through four steps in `src/curator.py`:
+
+1. **Interpret** (model call 1): the message becomes a taste profile (energy, positivity, acousticness, mood) and an intent (recommend, explain, chat).
+2. **Retrieve** (no model): the whole catalog is scored with the real `score_song` from `src/recommender.py`, and the best songs come back with their score breakdowns. When you ask why, the song on screen is always included.
+3. **Generate** (model call 2): the model writes the butler's reply and picks a song using only those retrieved songs and numbers.
+4. **Validate and apply**: numbers are clamped, the mood must be real, and the pick must be one of the retrieved songs. The game then moves your sliders, so every room's song and match percentage change, and the butler walks to the picked genre's door.
+
+**Setup for the Curator** (the game works without it; the butler then answers from retrieval alone, labeled "offline mode"):
+
+1. `pip install -r requirements.txt`
+2. Get an API key at https://console.anthropic.com/settings/keys (API billing is separate from a claude.ai subscription).
+3. Copy `.env.example` to `.env` and paste the key after `ANTHROPIC_API_KEY=`. `.env` is git-ignored, and the key is only ever read by the Python server, never sent to the browser.
+4. `python -m src.serve_game`
+
+**Cost and safety:** it uses `claude-haiku-5-5` (about $0.10 / $0.50 per million input and output tokens), so a chat message costs a fraction of a cent. `CURATOR_MAX_CALLS` (default 300) caps model calls per server run, and requests are rate limited and length limited. Every request, retrieval, model call (with token counts) and fallback is logged to `logs/curator.log`.
+
+**Testing the AI:** `pytest` runs mocked tests for the whole pipeline (no key needed), including bad model output, API failures and the HTTP endpoint. `python -m src.eval_curator` runs six fixed prompts against the real model and checks that the answer parsed, the numbers are in range, the pick is a real song named in the reply, and the profile fits the request.
+
 ---
 
 ## How The System Works

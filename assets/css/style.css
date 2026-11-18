@@ -21,4 +21,17 @@
   #start p { color:var(--muted); max-width:420px; }
   #start button { background:var(--accent); color:#fff; border:0; border-radius:10px; padding:12px 24px;
     font-size:17px; font-weight:600; cursor:pointer; margin-top:8px; }
+  #curator { left:16px; bottom:16px; width:330px; }
+  #curator .title { font-weight:600; margin-bottom:6px; }
+  #curator-note { font-weight:400; font-size:11px; color:#ffb86b; }
+  #curator-log { max-height:190px; overflow-y:auto; font-size:13px; line-height:1.35; }
+  #curator-log div { margin-bottom:6px; }
+  #curator-log .bot { color:var(--text); }
+  #curator-log .me { color:var(--muted); text-align:right; }
+  #curator-log .pick { color:var(--accent); font-size:12px; }
+  #curator-log .err { color:#ff8a8a; }
+  #curator-form { display:flex; gap:6px; margin-top:6px; }
+  #curator-input { flex:1; min-width:0; background:#0b0c1a; color:var(--text); border:1px solid #3a3d66; border-radius:6px; padding:6px; }
+  #curator-send { background:var(--accent); color:#fff; border:0; border-radius:6px; padding:0 12px; font-weight:600; cursor:pointer; }
+  #curator-send:disabled { opacity:.5; cursor:wait; }
   .hidden { display:none !important; }

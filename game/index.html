@@ -24,6 +24,15 @@
   <label><span>Acoustic</span><input id="acousticness" type="range" min="0" max="1" step="0.05" value="0.4"></label>
 </details>
 
+<div id="curator" class="panel">
+  <div class="title">The Curator <span id="curator-note"></span></div>
+  <div id="curator-log"><div class="bot">Good evening. Tell me what you are in the mood for, or ask why a song suits you.</div></div>
+  <form id="curator-form" autocomplete="off">
+    <input id="curator-input" type="text" maxlength="300" placeholder="e.g. something calm to study to">
+    <button id="curator-send" type="submit">Ask</button>
+  </form>
+</div>
+
 <div id="hint" class="panel"><kbd>&uarr;</kbd><kbd>&darr;</kbd> walk &nbsp; <kbd>&larr;</kbd><kbd>&rarr;</kbd> turn &nbsp; (or WASD)</div>
 
 <div id="start">
@@ -44,6 +53,7 @@
 <script src="assets/js/audio.js"></script>
 <script src="assets/js/world.js"></script>
 <script src="assets/js/visualizer.js"></script>
+<script src="assets/js/curator.js"></script>
 <script src="assets/js/game.js"></script>
 </body>
 </html>
