@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genre Hallway</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="info" class="panel">
+  <h2 id="info-title">Hallway</h2>
+  <div class="sub" id="info-sub">Walk into a room to hear its pick.</div>
+  <div class="sub" id="info-source" style="font-size:12px"></div>
+  <ul id="info-why"></ul>
+</div>
+
+<details id="taste" class="panel" open>
+  <summary>Your taste</summary>
+  <label><span>Mood</span><select id="mood"></select></label>
+  <label><span>Energy</span><input id="energy" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+  <label><span>Positivity</span><input id="valence" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+  <label><span>Acoustic</span><input id="acousticness" type="range" min="0" max="1" step="0.05" value="0.4"></label>
+</details>
+
+<div id="hint" class="panel"><kbd>&uarr;</kbd><kbd>&darr;</kbd> walk &nbsp; <kbd>&larr;</kbd><kbd>&rarr;</kbd> turn &nbsp; (or WASD)</div>
+
+<div id="start">
+  <h1>Genre Hallway</h1>
+  <p>Every genre has a room. Step inside to hear the intro of the song the recommender picks for you, and watch the visualizer on the theater screen.</p>
+  <p id="file-warning" class="hidden" style="color:#ff8a8a">
+    You opened this page as a file, so the browser will block the song previews.
+    Close it and run <b>python -m src.serve_game</b> instead.
+  </p>
+  <button>Enter (click or press Enter)</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script src="assets/data/game_data.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/palettes.js"></script>
+<script src="assets/js/recommender.js"></script>
+<script src="assets/js/audio.js"></script>
+<script src="assets/js/world.js"></script>
+<script src="assets/js/visualizer.js"></script>
+<script src="assets/js/game.js"></script>
+</body>
+</html>

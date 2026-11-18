@@ -15,6 +15,58 @@ Your goal is to:
 
 ---
 
+## Genre Hallway (3D game)
+
+A small 3D game built on the recommender: walk a character down a hallway with one room per genre. Each room is a mini movie theater. Step inside and the song the recommender picks for that genre plays, with a live audio visualizer on the screen and a "why" panel listing the score breakdown. The "Your taste" panel (mood, energy, positivity, acoustic) re-ranks every room's pick live.
+
+| Hallway | Latin room (tropical colors) | Metal room (reds) |
+|---|---|---|
+| ![The hallway with a glowing doorway for each genre](assets/images/hallway.png) | ![The latin theater room, visualizer playing Mi Gente](assets/images/latin-room.png) | ![The metal theater room, visualizer playing Enter Sandman](assets/images/metal-room.png) |
+
+(Screenshots captured from the running game with the real iTunes preview audio playing.)
+
+**Where things live**
+
+```
+game/index.html          the page (loads everything from assets/)
+assets/
+  css/style.css          page and panel styling
+  js/config.js           shared settings, ?mute debug flag
+  js/palettes.js         per-genre color palettes
+  js/recommender.js      taste profile + scoring (JS port of src/recommender.py)
+  js/audio.js            iTunes preview lookup + audio engine
+  js/world.js            3D hallway, rooms, character, collision
+  js/visualizer.js       the psychedelic visualizer + theater screens
+  js/game.js             input, info/taste panels, main loop
+  data/game_data.js      generated song data (python -m src.export_game_data)
+  images/                README screenshots
+data/game_songs.csv      the 100-song catalog (source of truth for the game)
+src/serve_game.py        local server: serves the page at / and assets/ at /assets/
+```
+
+```bash
+python -m src.export_game_data     # writes assets/data/game_data.js from data/game_songs.csv
+python -m src.check_previews       # optional: confirms each song has an iTunes preview
+```
+
+Then start the game (this serves it at http://localhost:8000 and opens your browser):
+
+```bash
+python -m src.serve_game
+```
+
+Do **not** just double-click `game/index.html`: browsers block a page opened from disk from calling the iTunes API, so no song would play (the game shows an error explaining this). It needs internet for Three.js and the previews. Controls: arrow keys or WASD. Click or press Enter to start (browsers need a click before they allow audio).
+
+Notes:
+
+- **Real music:** each room plays the 30-second preview clip of its pick, looked up from the iTunes Search API by title and artist (original recordings are preferred over remixes and covers). Apple's preview files allow cross-origin analysis, so the visualizer reacts to the actual audio. If a clip can't be found or loaded, the room plays nothing and the info panel says why (no fake sounds).
+- **Catalog:** the game uses `data/game_songs.csv` (100 real songs across 13 genres, 7 to 9 per genre; each room plays the one that best fits your taste sliders). To add a song, append a row and run `python -m src.check_previews` to confirm iTunes has a clip; if text search can't find it, put its iTunes track id in the optional `itunes_track_id` column. The fictional `data/songs.csv` still belongs to the original recommender and is unchanged. The energy, valence, tempo, danceability and acousticness values in `game_songs.csv` are my hand estimates, not measured audio features.
+- **Visualizer:** a feedback-trail kaleidoscope (waveform wedges, spectrum spokes, beat particles). Colors follow the genre: latin is tropical orange/yellow/pink, rock and metal are reds, ambient is deep blue, teal and forest green, reggae is red/gold/green, and so on (see `PALETTES` in `assets/js/palettes.js`).
+- The scoring in `assets/js/recommender.js` is a JavaScript port of `score_song` in `src/recommender.py`. If you change the weights there, change them in the game too.
+- Debug options: `index.html?autostart&room=3` skips the title screen and teleports into room 3; add `&mute` to skip audio (the visualizer then runs on a fake signal).
+
+---
+
 ## How The System Works
 
 There are many ways that AI recommendation systems work at YouTube, TikTok, and Spotify, and although they may not use the same recommendation system, the properties and attributes that make up their systems often have a lot of overlap. At a high-level, recommendation systems often have content-based filtering, that is, matching content attributes like mood, genre, energy to user taste profile. Another way these algorithms recommend content is collaborative-filtering, that is, using engagement behavior between user profiles to recommend content. 
