@@ -1,0 +1,21 @@
+PASS  model returns energy=500, valence=-3, mood='banana' -> clamped and rejected
+        game receives taste = {'energy': 1.0, 'valence': 0.0, 'acousticness': 0.5, 'mood': ''}
+PASS  model picks song id 999999 (not in the catalog) -> replaced by a retrieved song
+        pick = {'id': 58, 'title': 'My Favorite Things', 'artist': 'John Coltrane', 'genre': 'jazz', 'match': 88}
+PASS  explain intent -> sliders unchanged and the on-screen song is the one explained
+        taste = None
+PASS  5000-character message -> truncated to 300 before the model call
+        sent 300 characters
+PASS  empty message -> rejected
+PASS  non-JSON-object request -> rejected
+PASS  no API key -> retrieval-only answer from the real scores
+        reply = My apologies, my consultation notes are unavailable (no API key is configured). Going by your current taste, I...
+PASS  API connection error -> retrieval-only answer
+PASS  model returns incomplete JSON -> still a valid answer
+PASS  call budget of 2 spent after one chat message -> next message falls back
+PASS  second message within the rate-limit window -> refused
+PASS  POST with a 10,000-byte body -> 413
+PASS  POST with invalid JSON -> 400
+PASS  POST to an unknown path -> 404
+
+14/14 guardrail checks passed

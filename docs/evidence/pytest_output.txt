@@ -1,0 +1,29 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.15, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\josue\Documents\Projects\applied-ai-system-project\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\josue\Documents\Projects\applied-ai-system-project
+plugins: anyio-4.16.0
+collecting ... collected 20 items
+
+tests/test_curator.py::test_clean_taste_clamps_and_rejects_bad_values PASSED
+tests/test_curator.py::test_retrieve_ranks_by_real_score_limits_genres_and_includes_current_song PASSED
+tests/test_curator.py::test_happy_path_applies_taste_and_returns_grounded_pick PASSED
+tests/test_curator.py::test_pick_outside_the_retrieved_songs_is_replaced PASSED
+tests/test_curator.py::test_wild_model_numbers_are_clamped PASSED
+tests/test_curator.py::test_explain_keeps_taste_and_explains_the_on_screen_song PASSED
+tests/test_curator.py::test_message_is_truncated_and_empty_is_rejected PASSED
+tests/test_curator.py::test_no_client_falls_back_to_retrieval_only PASSED
+tests/test_curator.py::test_model_failure_falls_back_instead_of_crashing PASSED
+tests/test_curator.py::test_call_budget_and_rate_limit PASSED
+tests/test_curator.py::test_api_endpoint_validates_requests PASSED
+tests/test_export_game_data.py::test_every_song_gets_a_room PASSED
+tests/test_export_game_data.py::test_game_catalog_values_are_valid PASSED
+tests/test_export_game_data.py::test_every_genre_has_a_color_palette PASSED
+tests/test_export_game_data.py::test_preview_matching_helpers PASSED
+tests/test_export_game_data.py::test_itunes_track_id_is_attached_only_where_set PASSED
+tests/test_recommender.py::test_recommend_returns_songs_sorted_by_score PASSED
+tests/test_recommender.py::test_explain_recommendation_returns_non_empty_string PASSED
+tests/test_serve_game.py::test_server_serves_page_and_assets_but_nothing_else PASSED
+tests/test_serve_game.py::test_index_only_references_files_that_exist PASSED
+
+============================= 20 passed in 3.31s ==============================
