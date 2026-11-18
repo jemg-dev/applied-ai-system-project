@@ -17,7 +17,7 @@ The game itself (hallway, rooms, visualizer, iTunes previews) is the interface t
 
 ## 2. Goal and Intended Use
 
-**Goal.** Let a person set a taste profile, or describe a mood in plain language, and hear songs that fit, with a clear explanation of every match. The Curator turns "something calm to study to" or "why is this only a 77% match?" into an answer grounded in the catalog and the scoring code, and its answer also moves the game's sliders.
+**Goal.** Let a person set a taste profile, or describe a mood in plain language, and hear songs that fit, with a clear explanation of every match while making the interaction audibly and visually appealing. The Curator turns "something calm to study to" or "why is this only a 77% match?" into an answer grounded in the catalog and the scoring code, and its answer also moves the game's sliders.
 
 **Intended use.**
 
