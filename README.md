@@ -29,7 +29,7 @@ The full diagram is in [diagrams/system_diagram.md](diagrams/system_diagram.md) 
 ```mermaid
 flowchart LR
     P(["Player"]) -->|message| C["Chat panel"] -->|POST /api/curator| S["Server: size + JSON checks"]
-    S --> G["Guardrails: length, rate, budget"] --> I["1. Interpret<br/>(model call 1)"]
+    S --> G["Guardrails: length cap, rate limit"] --> I["1. Interpret<br/>(model call 1)"]
     I --> R["2. Retrieve<br/>score_song over 100 songs"]
     R --> M["3. Generate<br/>(model call 2)"] --> V["4. Validate"]
     V --> S

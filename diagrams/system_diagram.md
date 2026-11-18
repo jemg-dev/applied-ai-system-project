@@ -17,7 +17,7 @@ flowchart TD
     end
 
     subgraph Curator["Curator pipeline: src/curator.py"]
-        GUARD["Input guardrails<br/>300-char cap, rate limit, call budget"]
+        GUARD["Input guardrails<br/>300-char cap, rate limit"]
         INTERP["1. INTERPRET (model call 1)<br/>message to taste profile + intent"]
         RETR["2. RETRIEVE (no model)<br/>score every song, keep the best<br/>with score breakdowns"]
         GEN["3. GENERATE (model call 2)<br/>reply + pick using ONLY retrieved songs"]
@@ -50,9 +50,9 @@ flowchart TD
     RETR -->|"candidate songs + breakdowns"| GEN
     GEN <-->|"JSON schema output"| LLM
     GEN --> VALID
-    GUARD -.->|"over budget / too soon"| FALLBACK
-    INTERP -.->|"error"| FALLBACK
-    GEN -.->|"error"| FALLBACK
+    GUARD -.->|"too soon: asks the player to wait"| API
+    INTERP -.->|"error or call budget spent"| FALLBACK
+    GEN -.->|"error or call budget spent"| FALLBACK
     VALID -->|"reply, validated taste, pick"| API
     FALLBACK -->|"reply, no taste change"| API
     API -->|"JSON"| CHAT
